@@ -1,0 +1,91 @@
+.list-view-course-card--course-card-wrapper{
+	position:relative;
+	
+}
+.list-view-course-card--container {
+	display: flex;
+    position: relative;
+    border-bottom: 1px solid #F2F3F5;
+    background-color: #FFF;
+    padding: 8px 0;
+}
+
+.list-view-course-card--image-container{
+width: 210px;
+    height: auto;
+    margin-bottom: 16px;
+}
+.list-view-course-card--content{
+	position: relative;
+    flex: 1;
+	/*need to be better for responsive mode*/
+	position: relative;
+    padding: 0 16px;
+	
+}
+.author-info{
+	
+	position: relative;
+    top: 0px;
+    float: right !important;
+	z-index: 2;
+    background-color: white;
+	padding:0px 15px 15px 15px;
+    
+}
+.authorInfoParent{
+	display: flex;
+    flex-direction: column;
+	
+}
+.teachercoursesprofile{
+	padding-right: 30px;
+}
+.teacherproilepic{
+	margin:0 auto	;
+	margin-top: -20px;
+	}
+.teacherproilepic img{
+	border-radius:50%;
+	}
+	
+.udregistersince {
+    background: #d0011b;
+    height: 60px;
+    width: 40px;
+    position: relative;
+    text-align: center;
+    font: 600 16px sans-serif;
+    color: #fff;
+    line-height: 27px;
+    border: 0;
+	padding-top:5px;
+}
+
+.udregistersince:after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    height: 0;
+    width: 0;
+    border: solid 20px #d0011b;
+    border-bottom-color: transparent;
+	z-index:-2;
+}
+
+.udregistersince:hover {
+    background: #d0011b;
+}
+
+.udregistersince:hover:after {
+    border-color: #d0011b;
+    border-bottom-color: transparent;
+}	
+.list-view-course-card--price-container{
+	position: absolute;
+    left: 0;
+    bottom: 0;
+}	
+	
+	

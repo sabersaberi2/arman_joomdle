@@ -1,0 +1,24 @@
+/* CUSTOM */
+
+.joomdle_courses_container {
+  color : white;
+  background-color: #428bca;
+  padding : 5px 15px;
+}
+
+#exTab3 .nav-pills > li > a {
+  border-radius: 10px 25px 0 0 ;
+}
+.leftSide{
+  display: inline-block;
+  bottom: 78px;
+  float: left;
+}
+.rightSide{
+  display: inline-block;
+    color: gray;
+  padding: 0 20px 0;
+}
+.author-info{
+	float:right !important;
+}
