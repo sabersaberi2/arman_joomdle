@@ -317,11 +317,16 @@ class JoomdleController extends JControllerLegacy {
     function do_logout ()
     {
         $app = JFactory::getApplication();
+        // $url = new moodle_url($CFG.wwwroot);
+        // redirect($url, 'optional message', 1);
         $app->logout ();
+		$app->redirect (JURI::root ()); 
+	  
+        
     }
     
     function logout ()
-    {
+    { 
         $app = JFactory::getApplication();
         $app->redirect (JURI::root () . 'components/com_joomdle/views/wrapper/getout_logout.php');
     }
