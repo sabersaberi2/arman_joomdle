@@ -19,7 +19,9 @@ defined('_JEXEC') or die('Restricted access'); ?>
 $course_info         = $this->course_info;
 $course_id           = $this->course_info['remoteid'];                            // custom : course view variable
 $show_topics_numbers = $this->params->get( 'course_show_numbers');                // custom : course view variable
-$itemid              = JoomdleHelperContent::getMenuItem();
+//$itemid              = JoomdleHelperContent::getMenuItem();
+$itemid = $comp_params = JComponentHelper::getParams( 'com_joomdle' )->get( 'courseview_itemid' );
+//dump($itemid, "itemid");
 $jump_url            =  JoomdleHelperContent::getJumpURL ();                      // custom : course view variable
 
 $show_contents_link       = $this->params->get( 'show_contents_link' );
@@ -811,7 +813,7 @@ if (is_array ($this->teachers))
 	?>
 				<h3 style="text-align:center"><a class="nameLink" href="<?php
 		//echo JRoute::_($user_info['profile_url'] . "&Itemid=$itemid"); // $itemid=209 for custom menu assigned template in artmooc.ir
-		echo JRoute::_("index.php?option=com_joomdle&view=teacher&username=" . $teacher['username'] . "&Itemid=209");
+		echo JRoute::_("index.php?option=com_joomdle&view=teacher&username=" . $teacher['username'] . "&Itemid=$itemid");
 	?>">
 					<?php
 		echo $user_info['name'];
