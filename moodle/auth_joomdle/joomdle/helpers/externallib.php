@@ -2342,6 +2342,12 @@ class joomdle_helpers_external extends external_api {
                                  'mod' => new external_value(PARAM_RAW, 'mod'),
                                  'type' => new external_value(PARAM_RAW, 'type'),
                                             'available' => new external_value(PARAM_INT, 'available'),
+											/*added for use icon of default moodle activities icons and show availablity*/
+											'visible' => new external_value(PARAM_INT, 'visible'),
+											'visibleoncoursepage' => new external_value(PARAM_INT, 'visibleoncoursepage'),
+											'uservisible' => new external_value(PARAM_BOOL, 'uservisible'),
+											'modicon' => new external_value(PARAM_RAW, 'modicon'),
+											/*upcode added by lmskaran*/
                                             'completion_info' => new external_value(PARAM_RAW, 'completion info'),
                                             'display' => new external_value(PARAM_INT, 'display'),
                                             'content' => new external_value(PARAM_RAW, 'content'),

@@ -5528,7 +5528,12 @@ class auth_plugin_joomdle extends auth_plugin_manual {
                     continue;
                 }
                 $mod = $mods[$modnumber];
-
+				//added for use icon of default moodle activities icons and show availablity 
+				$resource['visible'] = $mod->visible;
+				$resource['visibleoncoursepage'] = $mod->visibleoncoursepage;
+				$resource['uservisible'] = $mod->uservisible;
+				$resource['modicon'] = $modinfo->get_cm ($mod->id)->get_icon_url()->out(false);
+				//upcode added by lmskaran
                 if ($username_orig != 'joomdle_get_not_visible')
                     if (!$mod->visible || !$mod->visibleoncoursepage) // part !$mod->visibleoncoursepage added for prevent show hidden activities that are available for users Hint:you can enable availability in Admin>advanced feature>allow stealth
                         continue;
@@ -5564,6 +5569,8 @@ class auth_plugin_joomdle extends auth_plugin_manual {
                 $resource['id'] = $mod->id;
                 $resource['name'] = $mod->name;
                 $resource['mod'] = $mod->modname;
+				
+ // print_r ($modinfo->get_cm ($mod->id)->get_icon_url()->out(false));die;
 
                 // Get content.
                 $resource['content'] = '';
