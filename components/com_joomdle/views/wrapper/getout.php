@@ -25,7 +25,7 @@ if (array_key_exists("HTTPS",$_SERVER) && $_SERVER["HTTPS"] == "on"){
 }
 $proto .= '://';
 
-$root = $proto.$host.$root;
+$root = $proto.$host.$root.'/index.php?option=com_joomdle&task=do_logout';
 ?>
 <script type="text/javascript">
 top.location.href = "<?php echo $root; ?>";
