@@ -15,8 +15,9 @@ $len2 = strlen ($path);
 $root = substr ($uri, 0, $len - $len2);
 
 $proto = 'http';
-if ($_SERVER["HTTPS"] == "on")
+if (array_key_exists("HTTPS",$_SERVER) && $_SERVER["HTTPS"] == "on"){
     $proto .= "s";
+}
 $proto .= '://';
 
 $root = $proto.$host.$root.'/index.php?option=com_joomdle&task=do_logout';

@@ -9,18 +9,20 @@
 
 $uri = $_SERVER['REQUEST_URI'];
 $host = $_SERVER['HTTP_HOST'];
-
-//print_r ($_SERVER);
+// echo "<pre>";
+// print_r ($_SERVER); 
+// echo "</pre>";
 //exit ();
 $path = strstr ($uri, '/components/com_joomdle/views/wrapper/getout.php');
 $len = strlen ($uri);
 $len2 = strlen ($path);
 $root = substr ($uri, 0, $len - $len2);
-$_SERVER["HTTPS"] == "on";
-
+//$_SERVER["HTTPS"] == "on";
+ 
 $proto = 'http';
-if ($_SERVER["HTTPS"] == "on")
+if (array_key_exists("HTTPS",$_SERVER) && $_SERVER["HTTPS"] == "on"){
     $proto .= "s";
+}
 $proto .= '://';
 
 $root = $proto.$host.$root;
