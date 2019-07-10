@@ -9,6 +9,7 @@
     defined('_JEXEC') or die('Restricted access');
 
     $itemid = JoomdleHelperContent::getMenuItem();
+	$courseItemid = $comp_params = JComponentHelper::getParams( 'com_joomdle' )->get( 'courseview_itemid' );
     $unicodeslugs = JFactory::getConfig()->get('unicodeslugs');
 
     $document = JFactory::getDocument();
@@ -42,116 +43,10 @@
     // } mahdi agnelli
 
 ?>
-<style>
-.g-container{width:95%;}
-.g-content{margin:0;padding:0;}
-#g-navigation{background-color:#303642 !important;}
-.list-view-course-card--container{background-color:#eee;}
-.list-view-course-card--headline-and-instructor-container span div h1,.list-view-course-card--headline-and-instructor-container span div {font-size:12px !important;}
-hr{height:2px;border-bottom:2px solid black;margin:0;}
-.text_to_html *{color:black;}
-.g-menu-item---module-U2YkH{margin-top:8px;}
-.myshortlist {width:98%;}
-.col-md-3{margin-top:-150px;margin-right:7%;}
-.list-view-course-card--image-container{width:150px;}
-@media (max-width: 502px)
-{
-	.myshortlist {width:93%;}
-	.col-md-3{margin-top:8px;}
-	.list-view-course-card--image-container{width:50px;}
-}
-</style>
-
     <div class="joomdle-teacher<?php echo $this->pageclass_sfx;?>">
-	
-        <div width="100%" cellpadding="4" cellspacing="0" border="0" align="right" class="col-md-8 contentpane<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
-            <tr>
-                <td width="90%" height="20" class="sectiontableheader<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
-                    <?php echo JText::_('COM_JOOMDLE_TEACHED_COURSES'); ?>
-                </td>
-            </tr>
-        </div>	
-	
-<div style="padding: 5px 35px;" class="col-md-8 teachercoursesprofile ">
-<?php
-            if (is_array ($this->courses))
-                foreach ($this->courses as $id => $course)
-                {
-                    $summary_file = $course['summary_files'];
-                    if (is_array ($summary_file))
-                        $summary_file = array_shift($summary_file);
-                    if (empty ($summary_file)) // summary_file is empty
-                        $summary_file["url"] = JURI::root ().'media/joomdle/grow/no-image-min.png';
 
-                    if (!array_key_exists ('cost',$course))
-                        $course['cost'] = 0;
-
-                    if ($unicodeslugs == 1) {
-                        $course_slug = JFilterOutput::stringURLUnicodeSlug($course['fullname']);
-                        $cat_slug = JFilterOutput::stringURLUnicodeSlug($course['cat_name']);
-                    }
-                    else {
-                        $course_slug = JFilterOutput::stringURLSafe($course['fullname']);
-                        $cat_slug = JFilterOutput::stringURLSafe($course['cat_name']);
-                    }
-
-                    $course_link = JRoute::_("index.php?option=com_joomdle&view=detail&cat_id=".$course['cat_id']."-$cat_slug&course_id=".$course['remoteid']."-$course_slug&Itemid=$itemid");
-
-                    echo '<div class="list-view-course-card--course-card-wrapper">';
-                        
-                            echo '<div class="list-view-course-card--container list-view-course-card--bottom-border">';
-							echo "<a href=\"$course_link\">";
-                                echo '<div class="list-view-course-card--image-container">';
-                                    /* SUMMARY IMAGE FILE SECTION */
-                                    echo '<img class="img" hspace="0" vspace="5" align="center" src="'.$summary_file['url'].'" data-src="'.$summary_file['url'].'" >';
-                                echo '</div>';
-								echo '</a>';
-                                echo '<div class="list-view-course-card--content">';
-echo '<div>';
-                                    echo "<a href=\"$course_link\">";
-									echo '<div class="list-view-course-card--title"><h4>';
-                                        /* COURSE TITLE SECTION */
-                                        echo $course['fullname'];
-                                    echo '</h4></div>';
-									echo '</a>';
-                                    echo '<div class="list-view-course-card--headline-and-instructor-container">';
-                                        /* COURSE SUMMARY SECTION */
-                                        echo '<span>' . $course['summary'] . '</span>';
-                                    echo '</div>';
-echo '</div>';
-                                    echo '<div class="list-view-course-card--price-container">';
-
-                                        echo '<span>';
-										echo '<div style="color:red;font-size:14px;padding:5px;">
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star-empty"></span>
-							</div>';
-                                            /* COURSE ORIGINAL PRICE SECTION */
-                                            if ($course['cost'])
-                                                echo $course['cost'] . '<span style="opacity: 0.5;"> (' .
-                                                  ( JText::_('COM_JOOMDLE_CURRENCY_' . $course['currency']) == 'COM_JOOMDLE_CURRENCY_' . $course['currency']
-                                                    ? $course['currency'] : JText::_('COM_JOOMDLE_CURRENCY_' . $course['currency']) )
-                                                                                                                                 . ")</span>";
-                                            else
-                                                echo 'رایگان';
-                                        echo '</span>';
-
-                                    echo '</div>';
-
-                                echo '</div>';
-                            echo '</div>';
-                        
-                    echo '</div>';
-					echo '<hr/>';
-                }
-?>
-
-        </div>
-		<div class="clearfix visible-xs"></div>
-            <div class="col-md-3 author-info wi-100" >
+        <div class="flex-col wi-lg-25 wi-md-33 wi-sm-100 wi-xs-100 infoWrap" >
+            <div class="span3 author-info wi-100" >
                 <div class="authorInfoParent wi-100 flex-col al-center jus-start" typeof="Person">
                     <div class="anniversary flex-col">
                         <i aria-hidden="true" class="udregistersince fa fa-birthday-cake"><br>
@@ -212,44 +107,106 @@ echo '</div>';
                     if ( !(array_key_exists('profile_url', $this->user_info)) )
                         $this->user_info['profile_url'] = '#';
 ?>
-                    <h3 style="text-align:center"><a class="nameLink" href="<?php echo JRoute::_($this->user_info['profile_url']."&Itemid=$itemid");// $itemid=956 for udemy template?>">
+                    <a class="nameLink" href="<?php echo JRoute::_($this->user_info['profile_url']."&Itemid=$itemid");// $itemid=956 for udemy template?>">
                         <?php echo $this->user_info['name']; ?>
-                    </a></h3>
-					<div class="titles-teacher">
-						<img src='/images/titles-teacher.png' style='width:100%;' /><br/>
-						<div class="row" style="text-align:center;">
-							<div class="col-md-4 col-xs-4"><img src='/images/tea1.png' /></div>
-							<div class="col-md-4 col-xs-4"><img src='/images/tea2.png' /></div>
-							<div class="col-md-4 col-xs-4"><img src='/images/tea3.png' /></div>
-						</div>
-						<div class="row" style="text-align:center;">
-							<div class="col-md-4 col-xs-4"><?php echo count($this->courses); ?></div>
-							<div class="col-md-4 col-xs-4">4.33</div>
-							<div class="col-md-4 col-xs-4">254 نظر</div>
-						</div><br/>
-						<div style='text-align:center;'>
-							<span class="glyphicon glyphicon-user"></span> 481,923 دانشجو
-						</div>
-					</div>
-					<div class="titles" style='text-align:center;'>
-						<img src='/images/aboutAuthor.png' style='width:100%;' /><br/>
-						 <?php echo $this->user_info['cb_teacherscv']; ?>
-					</div>
-					<br/>
-					<div style='text-align:center;'>
-						<i class="col-md-2 col-sm-2"></i>
-						<i class="col-md-2 col-sm-2 fa fa-envelope"></i>
-						<i class="col-md-2 col-sm-2 fa fa-linkedin"></i>
-						<i class="col-md-2 col-sm-2 fa fa-twitter"></i>
-						<i class="col-md-2 col-sm-2 fa fa-facebook"></i>
-						<i class="col-md-2 col-sm-2"></i>
-					</div><br/>
+                    </a>
+
+                    <div class="activity portions wi-100 flex-row jus-between al-start">
+                        <div class="titles">فعالیت مدرس</div>
+                        <div class="flex-col jus-center al-center wi-30">
+                            <i class="icon-faranesh-font-11"></i>
+                            <div class="desc">تعداد دوره‌ها</div>
+                            <div class="value">
+                                <?php echo count($this->courses); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aboutAuthor portions wi-100 flex-row jus-between al-start">
+                        <div class="titles">درباره مدرس</div>
+                        <p class="flex-col jus-center al-center wi-100" style="text-align: right;">
+                            <?php echo $this->user_info['cb_teacherscv']; ?>
+                        </p>
+                    </div>
                 </div>
             </div>
+        </div>
 
+        <div width="100%" cellpadding="4" cellspacing="0" border="0" align="center" class="contentpane<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
+            <tr>
+                <td width="90%" height="20" class="sectiontableheader<?php echo $this->params->get( 'pageclass_sfx' ); ?>">
+                    <?php echo JText::_('COM_JOOMDLE_TEACHED_COURSES'); ?>
+                </td>
+            </tr>
+        </div>
 
+        <div class="span9 teachercoursesprofile col-md-9 col-md-pull-3">
+<?php
+            if (is_array ($this->courses))
+                foreach ($this->courses as $id => $course)
+                {
+                    $summary_file = $course['summary_files'];
+                    if (is_array ($summary_file))
+                        $summary_file = array_shift($summary_file);
+                    if (empty ($summary_file)) // summary_file is empty
+                        $summary_file["url"] = JURI::root ().'media/joomdle/grow/no-image-min.png';
 
-        
+                    if (!array_key_exists ('cost',$course))
+                        $course['cost'] = 0;
+
+                    if ($unicodeslugs == 1) {
+                        $course_slug = JFilterOutput::stringURLUnicodeSlug($course['fullname']);
+                        $cat_slug = JFilterOutput::stringURLUnicodeSlug($course['cat_name']);
+                    }
+                    else {
+                        $course_slug = JFilterOutput::stringURLSafe($course['fullname']);
+                        $cat_slug = JFilterOutput::stringURLSafe($course['cat_name']);
+                    }
+
+                    $course_link = JRoute::_("index.php?option=com_joomdle&view=detail&cat_id=".$course['cat_id']."-$cat_slug&course_id=".$course['remoteid']."-$course_slug&Itemid=$courseItemid");
+
+                    echo '<div class="list-view-course-card--course-card-wrapper">';
+                        echo "<a href=\"$course_link\">";
+                            echo '<div class="list-view-course-card--container list-view-course-card--bottom-border">';
+                                echo '<div class="list-view-course-card--image-container">';
+                                    /* SUMMARY IMAGE FILE SECTION */
+                                    echo '<img class="img" hspace="0" vspace="5" align="center" src="'.$summary_file['url'].'" data-src="'.$summary_file['url'].'" >';
+                                echo '</div>';
+
+                                echo '<div class="list-view-course-card--content">';
+echo '<div>';
+                                    echo '<div class="list-view-course-card--title"><h4>';
+                                        /* COURSE TITLE SECTION */
+                                        echo $course['fullname'];
+                                    echo '</h4></div>';
+
+                                    echo '<div class="list-view-course-card--headline-and-instructor-container">';
+                                        /* COURSE SUMMARY SECTION */
+                                        echo '<span>' . $course['summary'] . '</span>';
+                                    echo '</div>';
+echo '</div>';
+                                    echo '<div class="list-view-course-card--price-container">';
+
+                                        echo '<span>';
+                                            /* COURSE ORIGINAL PRICE SECTION */
+                                            if ($course['cost'])
+                                                echo $course['cost'] . '<span style="opacity: 0.5;"> (' .
+                                                  ( JText::_('COM_JOOMDLE_CURRENCY_' . $course['currency']) == 'COM_JOOMDLE_CURRENCY_' . $course['currency']
+                                                    ? $course['currency'] : JText::_('COM_JOOMDLE_CURRENCY_' . $course['currency']) )
+                                                                                                                                 . ")</span>";
+                                            else
+                                                echo 'رایگان';
+                                        echo '</span>';
+
+                                    echo '</div>';
+
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</a>';
+                    echo '</div>';
+                }
+?>
+
+        </div>
     </div>
 	
 	<div>
