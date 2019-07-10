@@ -15,13 +15,15 @@ defined('_JEXEC') or die('Restricted access'); ?>
 .g-content{margin:0;padding:0;}
 </style>
 <?php
-//dump($tema, "mods");
+//dump($this->mods, "mods");
 $course_info         = $this->course_info;
+// dump($course_info, "course_info");
 $course_id           = $this->course_info['remoteid'];                            // custom : course view variable
 $show_topics_numbers = $this->params->get( 'course_show_numbers');                // custom : course view variable
 //$itemid              = JoomdleHelperContent::getMenuItem();
-$itemid = $comp_params = JComponentHelper::getParams( 'com_joomdle' )->get( 'courseview_itemid' );
-//dump($itemid, "itemid");
+$courseItemid = $comp_params = JComponentHelper::getParams( 'com_joomdle' )->get( 'courseview_itemid' );
+$teacherItemid = $comp_params = JComponentHelper::getParams( 'com_joomdle' )->get( 'default_itemid' ); // we get teacher itemid from defult itemid can be set in Joomdle>Cofiguration>LinkBehaviour> default itemid
+// dump(JComponentHelper::getParams( 'com_joomdle' )->get('default_itemid'), "allitemid");
 $jump_url            =  JoomdleHelperContent::getJumpURL ();                      // custom : course view variable
 
 $show_contents_link       = $this->params->get( 'show_contents_link' );
@@ -193,7 +195,22 @@ if (is_array ($this->mods))
                         if ($resource['mod'] == 'label')
                         {
                             echo '</P>';
-                            echo $resource['content'];
+                            //hide download button
+                            $contents = $resource['content'];
+                            $matches = array();
+                            $reg = '/(<video[[:print:]]*)><source/';
+                            preg_match($reg, $contents, $matches);
+                            if(array_key_exists(1,$matches))
+                            {
+                                $video_tag = $matches[1];
+                                $video_tag .= ' controlslist="nodownload"><source';
+                                dump($video_tag, "vodeo_tag");
+                                $contents = preg_replace($reg, $video_tag, $contents);
+                                echo $contents;
+                            }
+                            else
+                                echo $resource['content'];
+                            //hide download button
                             echo '</P>';
                             continue;
                         }
@@ -213,7 +230,7 @@ if (is_array ($this->mods))
                                     echo "<a $resource_target  href=\"".$direct_link."\">".$resource['name']."</a><br>";
                             }
                             else
-                                echo "<a $target href=\"".$jump_url."&mtype=$mtype&id=".$resource['id']."&course_id=$course_id&create_user=0&Itemid=$itemid&redirect=$direct_link\">".$resource['name']."</a><br>";
+                                echo "<a $target href=\"".$jump_url."&mtype=$mtype&id=".$resource['id']."&course_id=$course_id&create_user=0&Itemid=$courseItemid&redirect=$direct_link\">".$resource['name']."</a><br>";
                         }
                         else
                         {
@@ -400,7 +417,7 @@ if($show==0)
                                             echo "<a $resource_target  href=\"".$direct_link."\">".$resource['name']."</a><br>";
                                     }
                                     else
-                                        echo "<a $target href=\"".$jump_url."&mtype=$mtype&id=".$resource['id']."&course_id=$course_id&create_user=0&Itemid=$itemid&redirect=$direct_link\">".$resource['name']."</a><br>";
+                                        echo "<a $target href=\"".$jump_url."&mtype=$mtype&id=".$resource['id']."&course_id=$course_id&create_user=0&Itemid=$courseItemid&redirect=$direct_link\">".$resource['name']."</a><br>";
                                 }
                                 else
                                 {
@@ -473,6 +490,7 @@ if($show==0)
 <?php
                                     
                                     $mtype = JoomdleHelperSystem::get_mtype ($resource['mod']);
+                                    //dump($mtype, "mtype");
                                     if (!$mtype) // skip unknow modules
                                         continue;
 
@@ -483,7 +501,22 @@ if($show==0)
                                     if ($resource['mod'] == 'label')
                                     {
                                         echo '</P>';
+                                        //hide download button
+                                        $contents = $resource['content'];
+                                        $matches = array();
+                                        $reg = '/(<video[[:print:]]*)><source/';
+                                        preg_match($reg, $contents, $matches);
+                                        if(array_key_exists(1,$matches))
+                                        {
+                                            $video_tag = $matches[1];
+                                            $video_tag .= ' controlslist="nodownload" preload="none" oncontextmenu="return false;"><source';
+                                            //dump($video_tag, "vodeo_tag");
+                                            $contents = preg_replace($reg, $video_tag, $contents);
+                                            echo $contents;
+                                        }
+                                        else
                                             echo $resource['content'];
+                                        //hide download button
                                         echo '</P>';
                                         continue;
                                     }
@@ -503,7 +536,7 @@ if($show==0)
                                                 echo "<a $resource_target  href=\"".$direct_link."\">".$resource['name']."</a><br>";
                                         }
                                         else
-                                            echo "<a $target href=\"".$jump_url."&mtype=$mtype&id=".$resource['id']."&course_id=$course_id&create_user=0&Itemid=$itemid&redirect=$direct_link\">".$resource['name']."</a><br>";
+                                            echo "<a $target href=\"".$jump_url."&mtype=$mtype&id=".$resource['id']."&course_id=$course_id&create_user=0&Itemid=$courseItemid&redirect=$direct_link\">".$resource['name']."</a><br>";
                                     }
                                     else
                                     {
@@ -546,24 +579,22 @@ if($show==0)
 </div>
 
 <!---------End Of Elanat---------------------------->		
-		
-		
-		
+
 	</div>
 <div class="clearfix visible-xs"></div>
 	<div class="col-md-3">
-		<button id="wishlist-button-625204" title="افزودن به علاقه مندی ها" data-purpose="toggle-wishlist" type="button" class="wishlist--wishlist--2riVP wishlist-button--style-inverse--22PW4 wishlist-button--wishlist-btn--3Xy6s btn btn-link" style="
+		<!--button id="wishlist-button-625204" title="افزودن به علاقه مندی ها" data-purpose="toggle-wishlist" type="button" class="wishlist--wishlist--2riVP wishlist-button--style-inverse--22PW4 wishlist-button--wishlist-btn--3Xy6s btn btn-link" style="
 		font-size: 10px;
 		
-		"><span class="sr-only">افزودن به علاقه مندی</span><span class="wishlist-button--status-text--2wu8d">افزودن به علاقه مندی</span><span class="glyphicon glyphicon-heart-empty" style="font-size: 20px;"></span></button>
+		"><span class="sr-only">افزودن به علاقه مندی</span><span class="wishlist-button--status-text--2wu8d">افزودن به علاقه مندی</span><span class="glyphicon glyphicon-heart-empty" style="font-size: 20px;"></span></button-->
 		
 		<div class="ud-component--clp--gift-this-course" ng-non-bindable="" style="
 		font-size: 10px;
 		display: inline-block;
 		">
-		<div><a class="gift-this-course--gift-this-course__link--3TaW-" data-purpose="gift-course" href="/gift/the-web-developer-bootcamp/?couponCode=MOTHERSDAYSL2" ><span>هدیه این دوره</span><span class="glyphicon glyphicon-gift" style="
+		<!--div><a class="gift-this-course--gift-this-course__link--3TaW-" data-purpose="gift-course" href="/gift/the-web-developer-bootcamp/?couponCode=MOTHERSDAYSL2" ><span>هدیه این دوره</span><span class="glyphicon glyphicon-gift" style="
 			font-size: 20px;
-		"></span></a></div>
+		"></span></a></div-->
 		</div>
 <?php
                     if (is_array ($this->teachers))
@@ -593,8 +624,29 @@ if($show==0)
 
 <!---------Start Of summary---------------------------->			
 		<div class="course_detail_price jf_col grid_6 ">
-			<img id="Mbanner" align="left" class="course_pic" src="<?php echo $file['url']; ?>" />
-			<div class="joomdle_course_buttons" style="text-align: center;margin:10px auto 0;">
+			    <img id="Mbanner" align="left" class="course_pic" src="<?php echo $file['url']; ?>" />
+            <?php if ($show_cost) : ?>
+                <?php if ($course_info['cost']) : 
+                    /*." (".
+                    ( JText::_('COM_JOOMDLE_CURRENCY_' . $course_info['currency']) == 'COM_JOOMDLE_CURRENCY_' . $course_info['currency']
+                        ? $course_info['currency'] : JText::_('COM_JOOMDLE_CURRENCY_' . $course_info['currency']) )
+                        .")";*/
+                    ?>
+                    <div class="jf_col_fluid joomdle_course_cost" >
+                    &nbsp;<hr/>
+                        <b style="color:#007791"><?php //echo JText::_('COM_JOOMDLE_COST'); ?><span style="color:#000;" class="gicon1 glyphicon glyphicon-credit-card"></span> &nbsp;</b><?php echo number_format($course_info['cost']) ?> تومان
+                        <?php if ($show_startdate) : ?>
+                            <div class="jf_col_fluid joomdle_course_startdate" >
+                                <b style="color:#007791"><span class="glyphicon glyphicon-time gicon1"></span>&nbsp;
+                                <?php echo JHtml::_('date',date('Y-m-d',$course_info['startdate']), JText::_('DATE_FORMAT_LC1')); ?>
+                                </b>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <div class="joomdle_course_buttons" style="text-align: center;margin:10px auto 0;">
 				<?php echo JoomdleHelperSystem::actionbutton($course_info, $free_courses_button, $paid_courses_button) ?>
 			</div>
 
@@ -608,13 +660,6 @@ if($show==0)
 								<b><?php echo JText::_('COM_JOOMDLE_LANGUAGE'); ?>:&nbsp;</b><?php echo JoomdleHelperContent::get_language_str ($course_info['lang']); ?>
 							</div>
 						<?php endif; ?>
-					<?php endif; ?>
-
-					<?php if ($show_startdate) : ?>
-						<div class="jf_col_fluid joomdle_course_startdate" >
-							<b><?php echo JText::_('COM_JOOMDLE_START_DATE'); ?>:&nbsp;</b>
-							<?php echo JHtml::_('date',date('Y-m-d',$course_info['startdate']), JText::_('DATE_FORMAT_LC1')); ?>
-						</div>
 					<?php endif; ?>
 
 					<?php if ($show_enroldates) : ?>
@@ -646,37 +691,28 @@ if($show==0)
 						<?php endif; ?>
 					<?php endif; ?>
 
-					<?php if ($show_cost) : ?>
-						<?php if ($course_info['cost']) : ?>
-							<div class="jf_col_fluid joomdle_course_cost">
-								<b><?php echo JText::_('COM_JOOMDLE_COST'); ?>:&nbsp;</b><?php echo $course_info['cost']." (".
-											  ( JText::_('COM_JOOMDLE_CURRENCY_' . $course_info['currency']) == 'COM_JOOMDLE_CURRENCY_' . $course_info['currency']
-												? $course_info['currency'] : JText::_('COM_JOOMDLE_CURRENCY_' . $course_info['currency']) )
-																															 .")"; ?>
-							</div>
-						<?php endif; ?>
-					<?php endif; ?>
+					
 
 					<?php $index_url = JURI::base()."index.php"; ?>
 					<?php if ($show_topicsnumber) : ?>
 						<div class="jf_col_fluid joomdle_course_topicsnumber">
-							<span class="glyphicon glyphicon-th-list"></span><b><?php echo JText::_('COM_JOOMDLE_TOPICS'); ?>:&nbsp;</b><?php echo $course_info['numsections']; ?>
+							<span class="glyphicon glyphicon-th-list"></span>&nbsp;&nbsp;<b><?php echo JText::_('COM_JOOMDLE_TOPICS'); ?>:&nbsp;</b><?php echo $course_info['numsections']; ?>
 						</div>
 					<?php endif; ?>
 					  <div class="jf_col_fluid joomdle_course_topicsnumber">
-							<span class="glyphicon glyphicon-file"></span><b>تعداد فایل:&nbsp;</b>در دست بررسی
+							<span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;<b>تعداد فایل:&nbsp;</b>در دست بررسی
 						</div>
 					<div class="jf_col_fluid joomdle_course_topicsnumber">
-						  <span class="glyphicon glyphicon-list-alt"></span><b>صدور گواهی نامه:&nbsp;</b>در دست بررسی
+						  <span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;<b>صدور گواهی نامه:&nbsp;</b>در دست بررسی
 					 </div>
 					 <div class="jf_col_fluid joomdle_course_topicsnumber">
-						   <span class="glyphicon glyphicon-time"></span><b>مهلت دسترسی:&nbsp;</b>تا انتهای مهلت درس
+						   <span class="glyphicon glyphicon-certificate"></span>&nbsp;&nbsp;<b>مهلت دسترسی:&nbsp;</b>تا انتهای مهلت درس
 					 </div>
 					 <div class="jf_col_fluid joomdle_course_topicsnumber">
-						  <span class="glyphicon glyphicon-phone"></span><b>قابل دسترس در:&nbsp;</b>موبایل و کامپیوتر
+						  <span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;<b>قابل دسترس در:&nbsp;</b>موبایل و کامپیوتر
 					 </div>
 					 <div class="jf_col_fluid joomdle_course_topicsnumber">
-						  <span class="glyphicon glyphicon-globe"></span><b>مرورگر توصیه شده:&nbsp;</b>کروم و فایرفاکس
+						  <span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;<b>مرورگر توصیه شده:&nbsp;</b>کروم و فایرفاکس
 					 </div>
 				</div>
 
@@ -704,13 +740,12 @@ if($show==0)
                                 if ((array_key_exists ('thumb_url', $user_info2)) && ($user_info2['thumb_url'] != ''))
                                     $user_info2['pic_url'] = $user_info2['thumb_url'];
 ?>
-                                <a href="<?php echo JRoute::_("index.php?option=com_joomdle&view=teacher&username=".$teacher['username']."&Itemid=$itemid"); ?>" >
+                                <a href="<?php echo JRoute::_("index.php?option=com_joomdle&view=teacher&username=".$teacher['username']."&Itemid=$teacherItemid"); ?>" >
                                     <img src="<?php echo $user_info2['pic_url']; ?>" style="padding: 10px 10px 0px 10px;">
                                 </a>
                                 <div class="jf_col_fluid ">
-                                    <a href="<?php echo JRoute::_("index.php?option=com_joomdle&view=teacher&username=".$teacher['username']."&Itemid=$itemid"); ?>"><?php echo $teacher['firstname']." ".$teacher['lastname']; ?></a>
+                                    <a href="<?php echo JRoute::_("index.php?option=com_joomdle&view=teacher&username=".$teacher['username']."&Itemid=$teacherItemid"); ?>"><?php echo $teacher['firstname']." ".$teacher['lastname']; ?></a>
                                 </div>
-                            
                             <?php endforeach; ?>
                     </div>
                 </div>
@@ -722,10 +757,6 @@ if($show==0)
  </div>	
 <!---------End Of summary----------------------------> 
 <!---------Start Of author---------------------------->
-		<div class="author-info wi-100" style="width:100%;top:10px;">
-			
-
-<!---------End Of Milad---------------------------->
 
  <?php break;endforeach; ?>
 <?php
@@ -733,6 +764,7 @@ if (is_array ($this->teachers))
     foreach ($this->teachers as $teacher) :
         //dump($teacher, "teacher");
 ?>
+<div class="author-info wi-100" style="width:100%;top:10px;">
 <div class="authorInfoParent wi-100 flex-col al-center jus-start" typeof="Person">
 				<div class="anniversary flex-col">
 					<i aria-hidden="true" class="udregistersince fa fa-birthday-cake"><br>
@@ -812,23 +844,73 @@ if (is_array ($this->teachers))
 					$user_info['profile_url'] = '#';
 	?>
 				<h3 style="text-align:center"><a class="nameLink" href="<?php
-		//echo JRoute::_($user_info['profile_url'] . "&Itemid=$itemid"); // $itemid=209 for custom menu assigned template in artmooc.ir
-		echo JRoute::_("index.php?option=com_joomdle&view=teacher&username=" . $teacher['username'] . "&Itemid=$itemid");
+		//echo JRoute::_($user_info['profile_url'] . "&Itemid=$courseItemid"); // $itemid=209 for custom menu assigned template in artmooc.ir
+		echo JRoute::_("index.php?option=com_joomdle&view=teacher&username=" . $teacher['username'] . "&Itemid=$teacherItemid");
 	?>">
 					<?php
 		echo $user_info['name'];
 	?>
 				</a></h3>
-				
+<style>
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+.strike > span {
+    position: relative;
+    display: inline-block;
+    border:solid;
+    padding:5px;
+    border-color:#aaaaaa70;
+    font-size:12px;
+    border-radius:10px;
+}
+
+.strike > span:before,
+.strike > span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: #aaaaaa70;
+    
+}
+
+.strike > span:before {
+    right: 100%;
+}
+.col-xs-4
+{
+    font-size:10px;
+}
+.gicon
+{
+    font-size:22px;
+}
+.gicon1 
+{
+    font-size:18px;
+    color:#007791;
+}
+.strike > span:after {
+    left: 100%;
+}
+</style>
 				
 				<div class="titles-teacher">
-						<img src='/images/titles-teacher.png' style='width:100%;' /><br/>
+                        <div class="strike">
+                            <span>فعالیت مدرس</span>
+                        </div>
 						<div class="row" style="text-align:center;">
-							<div class="col-md-4 col-xs-4"><img src='/images/tea1.png' /></div>
-							<div class="col-md-4 col-xs-4"><img src='/images/tea2.png' /></div>
-							<div class="col-md-4 col-xs-4"><img src='/images/tea3.png' /></div>
+							<div class="col-md-4 col-xs-4"><span class="gicon glyphicon glyphicon-film"></span><br/> تعداد دوره ها</div>
+							<div class="col-md-4 col-xs-4"><span class="gicon glyphicon glyphicon-star-empty"></span><br/> میانگین امتیازها</div>
+							<div class="col-md-4 col-xs-4"><span class="gicon glyphicon glyphicon-comment"></span><br/> تماس با کاربران</div>
 						</div>
-						<div class="row" style="text-align:center;">
+						<div class="row" style="text-align:center;margin-top:8px;">
 							<div class="col-md-4 col-xs-4"><?php echo $teacher['coursecounter']; ?></div>
 							<div class="col-md-4 col-xs-4">4.33</div>
 							<div class="col-md-4 col-xs-4">254 نظر</div>
@@ -837,10 +919,10 @@ if (is_array ($this->teachers))
 							<span class="glyphicon glyphicon-user"></span> 481,923 دانشجو
 						</div>
 					</div><br/>
-				<div class="titles" style='text-align:center;'>
-					<img src='/images/aboutAuthor.png' style='width:100%;' /><br/>
-					<?php echo $user_info['cb_teacherscv']; ?>
-				</div>
+                    <div class="strike">
+                        <span>درباره مدرس</span>
+                        <div style="text-align: justify;"><?php //echo $teacher['cb_teacherscv']; ?></div>
+                    </div>
 				<br/>
 				<div style='text-align:center;'>
 						<i class="col-md-2 col-sm-2 fr"></i>
@@ -851,12 +933,13 @@ if (is_array ($this->teachers))
 						<i class="col-md-2 col-sm-2 fr"></i>
 					</div><br/>
 			</div>
+            </div>
 <?php
     endforeach;
 ?>
-            <div/>
-        <div/>
-    <div/>
+            
+        </div>
+    </div>
 </div>
 
 <div>
