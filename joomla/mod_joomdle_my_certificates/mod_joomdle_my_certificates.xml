@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="module" method="upgrade">
+	<name>Joomdle My Certificates</name>
+	<creationDate>October 2011</creationDate>
+	<author>Qontori Pte Ltd</author>  
+	<copyright>Copyright (C) 2014 Qontori Pte Ltd</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>development@qontori.com</authorEmail>
+	<authorUrl>www.qontori.com</authorUrl>
+	<version>1.0.1</version>
+	<description>Shows Moodle certificates for the user</description>
+	<files>
+		<filename module="mod_joomdle_my_certificates">mod_joomdle_my_certificates.php</filename>
+		<filename module="mod_joomdle_my_certificates">index.html</filename>
+		<filename module="mod_joomdle_my_certificates">helper.php</filename>
+		<filename module="mod_joomdle_my_certificates">tmpl/default.php</filename>
+	</files>
+	  <languages>
+		<language tag="en-GB">language/en-GB.mod_joomdle_my_certificates.ini</language>
+		<language tag="es-ES">language/es-ES.mod_joomdle_my_certificates.ini</language>
+	  </languages>
+	<config><fields name="params"><fieldset name="basic">
+		<field name="show_send_certificate" type="list" default="0" label="COM_JOOMDLE_SHOW_SEND_CERTIFICATE" description="COM_JOOMDLE_SHOW_SEND_CERTIFICATE_DESCRIPTION">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </field>
+		<field name="certificate_type" type="list" default="normal" label="COM_JOOMDLE_CERTIFICATE_TYPE" description="COM_JOOMDLE_CERTIFICATE_TYPE_DESCRIPTION">
+            <option value="normal">Moodle Certificate module</option>
+            <option value="simple">Simplecertificate</option>
+        </field>
+
+		<field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+    </fieldset></fields></config>
+
+</extension>

@@ -1,0 +1,15 @@
+.eachteacher{
+	width: 90%;
+	height:290px;
+	margin: 1px 5px 1px 0px;
+	padding: 10px 8px;
+	box-shadow: 0 0 1px 1px rgba(20,23,28,0.1), 0 3px 1px 0 rgba(20,23,28,0.1);
+	display: inline-grid;
+}
+.teachername{
+	    text-align: center;
+}
+.teacherpic{
+	margin: 0 auto;
+	width: 100px;
+}

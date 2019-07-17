@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="joomdleshop" method="upgrade">
+	<name>Joomdle Hikashop Integration</name>
+	<author>Qontori Pte Ltd</author>
+	<creationDate>2014</creationDate>
+	<copyright>Copyright (C) 2014 Qontori Pte Ltd</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>development@qontori.com</authorEmail>
+	<authorUrl>www.qontori.com</authorUrl>
+	<version>1.1.0</version>
+	<description>Provides Joomdle/Hikashop integration</description>
+	<files>
+		<filename plugin="joomdleshophikashop">joomdleshophikashop.php</filename>
+	</files>
+	 <languages folder="language">
+                <language tag="en-GB">en-GB.plg_joomdleshop_joomdleshophikashop.ini</language>
+        </languages>
+
+    <updateservers>
+        <server type="extension" priority="1" name="Joomdle">http://www.joomdle.com/index.php?option=com_ars&amp;view=update&amp;task=stream&amp;format=xml&amp;id=18</server>
+    </updateservers>
+
+</extension>

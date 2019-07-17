@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="joomdleprofile" method="upgrade">
+	<name>Joomdle Joomla profile</name>
+	<author>Qontori Pte Ltd</author>
+	<creationDate>2019</creationDate>
+	<copyright>Copyright (C) 2019 Qontori Pte Ltd</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>development@qontori.com</authorEmail>
+	<authorUrl>www.qontori.com</authorUrl>
+	<version>1.0.0</version>
+	<description>Provides Joomdle/Joomla profile integration</description>
+	<files>
+		<filename plugin="joomlaprofile">joomlaprofile.php</filename>
+		<filename plugin="joomlaprofile">j16profiles.php</filename>
+	</files>
+	 <languages folder="language">
+                <language tag="en-GB">en-GB.plg_joomdleprofile_joomlaprofile.ini</language>
+	</languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="is_secondary_data_source" type="radio" class="btn-group" default="0" label="COM_JOOMDLE_ENABLE_AS_SECONDARY_DATA_SOURCE" description="COM_JOOMDLE_ENABLE_AS_SECONDARY_DATA_SOURCE_DESCRIPTION">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+                </field>
+
+				<field name="j16_form_path" type="text"
+					description="COM_JOOMDLE_J16_FORM_PATH_DESCRIPTION"
+					label="COM_JOOMDLE_J16_FORM_PATH"
+				/>
+
+				<field name="j16_profile_plugin" type="text"
+					description="COM_JOOMDLE_J16_PROFILE_PLUGIN_DESCRIPTION"
+					label="COM_JOOMDLE_J16_PROFILE_PLUGIN"
+				/>
+
+            </fieldset>
+        </fields>
+    </config>
+</extension>

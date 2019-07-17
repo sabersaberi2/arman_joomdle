@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="joomdleprofile" method="upgrade">
+	<name>Joomdle Joomla Fields profile</name>
+	<author>Qontori Pte Ltd</author>
+	<creationDate>2017</creationDate>
+	<copyright>Copyright (C) 2017 Qontori Pte Ltd</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>development@qontori.com</authorEmail>
+	<authorUrl>www.qontori.com</authorUrl>
+	<version>1.0.0</version>
+	<description>Provides Joomdle/Joomla user fields profile integration</description>
+	<files>
+		<filename plugin="joomdlejoomlafieldsprofile">joomdlejoomlafieldsprofile.php</filename>
+	</files>
+	 <languages folder="language">
+                <language tag="en-GB">en-GB.plg_system_joomdlejoomlafieldsprofile.ini</language>
+        </languages>
+	<params>
+	</params>
+</extension>

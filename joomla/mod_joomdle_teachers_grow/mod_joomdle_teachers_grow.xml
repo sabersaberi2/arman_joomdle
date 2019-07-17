@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="1.6.0" client="site" method="upgrade">
+	<name>Joomdle teachers grow</name>
+	<creationDate>April 2013</creationDate>
+	<author>Qontori Pte Ltd</author>  
+	<copyright>Copyright (C) 2014 Qontori Pte Ltd</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>development@qontori.com</authorEmail>
+	<authorUrl>www.qontori.com</authorUrl>
+	<version>1.0.1</version>
+	<description>Joomdle teachers grow</description>
+	<files>
+		<filename module="mod_joomdle_teachers_grow">mod_joomdle_teachers_grow.php</filename>
+		<filename module="mod_joomdle_teachers_grow">index.html</filename>
+		<filename module="mod_joomdle_teachers_grow">helper.php</filename>
+		<filename module="mod_joomdle_teachers_grow">tmpl/default.php</filename>
+		<filename module="mod_joomdle_teachers_grow">tmpl/slideWithSlick.php</filename>
+	</files>
+	<media folder="media" destination="joomdle/grow">
+		<filename>index.html</filename>
+		<filename>readme.txt</filename>
+		<filename>anonymous_user_avatar_100.jpg</filename>
+		<filename>no-image-min.png</filename>
+		<folder>slick</folder>
+		<folder>owlcarousel</folder>
+	</media>
+	<languages>
+		<language tag="en-GB">language/en-GB.mod_joomdle_teachers_grow.sys.ini</language>
+		<language tag="en-GB">language/en-GB.mod_joomdle_teachers_grow.ini</language>
+		<language tag="es-ES">language/es-ES.mod_joomdle_teachers_grow.ini</language>
+	</languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+            </fieldset>
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout" default="" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC" /> 
+                <field name="teachers_to_exclude" type="text" default="" label="Teachers to exclude" description="Any valid user IDs or user names (comma separated)" />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

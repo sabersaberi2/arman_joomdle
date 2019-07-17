@@ -1,0 +1,129 @@
+<?php
+/**
+* @package		Joomdle
+* @copyright	Copyright (C) 2009 - 2010 Antonio Duran Terres
+* @license		GNU/GPL, see LICENSE.php
+* Joomla! is free software. This version may have been modified pursuant
+* to the GNU General Public License, and as distributed it includes or
+* is derivative of works licensed under the GNU General Public License or
+* other free or open source software licenses.
+* See COPYRIGHT.php for copyright notices and details.
+*/
+
+// no direct access
+defined('_JEXEC') or die('Restricted access');
+
+require_once (dirname(__FILE__).'/helper.php');
+require_once(JPATH_SITE.'/components/com_joomdle/helpers/content.php');
+
+
+
+$comp_params = JComponentHelper::getParams( 'com_joomdle' );
+
+$moodle_xmlrpc_server_url = $comp_params->get( 'MOODLE_URL' ).'/mnet/xmlrpc/server.php';
+$moodle_auth_land_url = $comp_params->get( 'MOODLE_URL' ).'/auth/joomdle/land.php';
+$moodle_url = $comp_params->get( 'MOODLE_URL' );
+$linkstarget = $comp_params->get( 'linkstarget', 'description' );
+$default_itemid = $comp_params->get( 'default_itemid' );
+$joomdle_itemid = $comp_params->get( 'joomdle_itemid' );
+$course_itemid=$comp_params->get( 'courseview_itemid' );//added by mjt for slider link to course page and use in tmpl directory(in this case in V4...) :) 
+$moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
+
+$linkto = $params->get( 'linkto' );
+$number_default = $params->get( 'number_of_courses_default' );
+$number_2000 = $params->get( 'number_of_courses_2000' );
+$number_1500 = $params->get( 'number_of_courses_1500' );
+$number_1300 = $params->get( 'number_of_courses_1300' );
+$number_1024 = $params->get( 'number_of_courses_1024' );
+$number_800 = $params->get( 'number_of_courses_800' );
+$number_500 = $params->get( 'number_of_courses_500' );
+if(is_null($number_default)){
+  $number_default = 4;
+}
+if(is_null($number_2000)){
+  $number_2000 = 4;
+}
+if(is_null($number_1500)){
+  $number_1500 = 4;
+}
+if(is_null($number_1300)){
+  $number_1300 = 4;
+}
+if(is_null($number_1024)){
+  $number_1024 = 3;
+}
+if(is_null($number_800)){
+  $number_800 = 2;
+}
+if(is_null($number_500)){
+  $number_500 = 1;
+}
+// dump($number_default, "number_default");
+//dump($number, "number");
+$user = JFactory::getUser();
+$username = $user->get('username');
+
+$session                = JFactory::getSession();
+$token = md5 ($session->getId());
+
+$guest_courses_only = $params->get( 'guest courses only', 0 );
+
+$sort_by = $params->get( 'sort_by', 'name' );
+
+switch ($sort_by)
+{
+	case 'date':
+		$order = 'created DESC';
+		break;
+	case 'sortorder':
+		$order = 'sortorder ASC';
+		break;
+	default:
+		$order = 'fullname ASC';
+		break;
+}
+
+if  ( $params->get( 'latest courses only' ))
+{
+    // CUSTOM : added $username arg
+	$courses = JoomdleHelperContent::getCourseList ( 0, $order, $guest_courses_only, $username);
+	$limit = $params->get( 'latest courses only' );
+}
+else
+{
+	//$courses = JoomdleHelperContent::getCourseList ( 0, 'fullname ASC', $guest_courses_only);
+	//$courses = JoomdleHelperContent::getCourseList ( 0, 'sortorder ASC', $guest_courses_only);
+    // CUSTOM : added $username arg
+	$courses = JoomdleHelperContent::getCourseList ( 0, $order, $guest_courses_only, $username);
+	$limit = PHP_INT_MAX; //no limit
+}
+
+//print_r ($courses);
+
+if  ( $params->get( 'courses_shown' ))
+{
+	if (is_array($params->get( 'courses_shown' )))
+		$courses_shown = $params->get( 'courses_shown' );
+	else
+		$courses_shown = array ( $params->get( 'courses_shown' ));
+
+	$courses = modJoomdleCoursesGrowHelper::filter_by_value ($courses, 'remoteid', $courses_shown );
+}
+if  ( $params->get( 'categories_shown' ))
+{
+	if (is_array($params->get( 'categories_shown' )))
+		$cats_shown = $params->get( 'categories_shown' );
+	else
+		$cats_shown = array ( $params->get( 'categories_shown' ));
+
+	$courses = modJoomdleCoursesGrowHelper::filter_by_value ($courses, 'cat_id', $cats_shown );
+}
+if  ( $params->get( 'free courses only' ))
+{
+	$courses = modJoomdleCoursesGrowHelper::filter_by_value ($courses, 'cost', array (0) );
+}
+// dump($courses ,"courses" );
+
+
+$layout           = $params->get('layout', 'default');
+require(JModuleHelper::getLayoutPath('mod_joomdle_courses_grow', $layout));

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="1.6.0" client="site" method="upgrade">
+	<name>Joomdle My Grades</name>
+	<creationDate>August 2010</creationDate>
+	<author>Qontori Pte Ltd</author>  
+	<copyright>Copyright (C) 2014 Qontori Pte Ltd</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>development@qontori.com</authorEmail>
+	<authorUrl>www.qontori.com</authorUrl>
+	<version>1.0</version>
+	<description>Shows user task grades</description>
+	<files>
+		<filename module="mod_joomdle_my_grades">mod_joomdle_my_grades.php</filename>
+		<filename module="mod_joomdle_my_grades">index.html</filename>
+		<filename module="mod_joomdle_my_grades">helper.php</filename>
+		<filename module="mod_joomdle_my_grades">tmpl/default.php</filename>
+	</files>
+	  <languages>
+		  <language tag="en-GB">language/en-GB.mod_joomdle_my_grades.ini</language>
+		  <language tag="es-ES">language/es-ES.mod_joomdle_my_grades.ini</language>
+		  <language tag="fr-FR">language/fr-FR.mod_joomdle_my_grades.ini</language>
+		  <language tag="de-DE">language/de-DE.mod_joomdle_my_grades.ini</language>
+		  <language tag="pt-BR">language/pt-BR.mod_joomdle_my_grades.ini</language>
+		  <language tag="it-IT">language/it-IT.mod_joomdle_my_grades.ini</language>
+	  </languages>
+	  <config><fields name="params"><fieldset name="basic">
+		<field name="last_grade_limit" type="text" size="3" default="10" label="COM_JOOMDLE_LATEST_GRADES_LIMIT" description="COM_JOOMDLE_LATEST_GRADES_LIMIT_DESCRIPTION" />
+		<field name="show_averages" type="list" default="0" label="COM_JOOMDLE_SHOW_AVERAGES" description="COM_JOOMDLE_SHOW_AVERAGES_DESCRIPTION">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+	        <field name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+		</fieldset></fields></config>
+</extension>

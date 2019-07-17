@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="joomdleevent" method="upgrade">
+	<name>Joomdle events - Telegram</name>
+	<author>Qontori Pte Ltd</author>
+	<creationDate>2017</creationDate>
+	<copyright>Copyright (C) 2014 Qontori Pte Ltd.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+	<authorEmail>development@qontori.com</authorEmail>
+	<authorUrl>www.qontori.com</authorUrl>
+	<version>1.0.0</version>
+	<description>Moodle event forwarding to telegram</description>
+	<files>
+		<filename plugin="Joomtel">Joomtel.php</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="bot_token"
+					type="text"
+					label="Bot authorization token"
+					description="The token is a string along the lines of 110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw that is required to authorize the bot and send requests to the Bot API"
+					default=""
+					size="5"
+				/>
+
+                <field
+					name="chat_id"
+					type="text"
+					label="Target unique identifier"
+					description="Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+					default=""
+					size="5"
+				/>
+                
+                <field
+                    name="show_title"
+                    type="checkbox"
+                    label="Show title"
+                    description="Show the title of the item"
+                    value="1"
+                    default="0" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>
