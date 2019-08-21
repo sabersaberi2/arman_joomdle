@@ -17,7 +17,27 @@ class  plgJoomdleeventJoomtel extends JPlugin
     {
         $config = JFactory::getConfig();
         $tmp_path = $config->get('tmp_path');
-        $print_text = $data['firstname_lastname'] . ' در درس \'' . $data['course_name'] . '\' با شناسه \'' . $data['course_id'] . '\' ثبت نام کرد.';
+        // echo "<pre>";
+        // print_r($data);
+        // echo "</pre>";
+        $user = JFactory::getUser();
+        $print_text = $data['username']." ".$data['name1'].  ' در درس \'' . $data['course_name'] . '\' با شناسه \'' . $data['course_id'] . '\' ثبت نام کرد.';
+        // $client = new SoapClient("http://37.130.202.188/class/sms/wsdlservice/server.php?wsdl"); // sms
+        /*
+        $smsService_username = "mojtabamojtaba"; 
+        $smsService_password = "13001200";
+        $smsService_from = "+98100020400";
+        $smsService_pattern_code = "147";
+        $smsService_to = array($userMobileNumber);
+        $smsService_input_data = array(
+            "company" => "دانه، آموزش مجازی فعالان فرهنگی",
+            "username" => $user_name,
+            "password" => $newPassword,
+            "site" => "lmskaran.com"
+        ); 
+        */
+        // $smsService_response = $client->sendPatternSms($smsService_from,$smsService_to,$smsService_username,$smsService_password,$smsService_pattern_code,$smsService_input_data);
+        // die();
         
         file_put_contents ($tmp_path . "/joomdle_events_test_role_assigned.txt",
                 $data['firstname_lastname'] . " enroled to course with ID=" . $data['course_id'] .
@@ -160,7 +180,7 @@ class  plgJoomdleeventJoomtel extends JPlugin
         ];
         
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,'https://api.telegram.org/bot' . $bot_token . '/sendMessage');
+        curl_setopt($ch, CURLOPT_URL,'https://tapi.bale.ai/bot' . $bot_token . '/sendMessage');
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
         // receive server response ...
