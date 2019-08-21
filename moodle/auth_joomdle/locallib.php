@@ -511,9 +511,10 @@ class auth_joomdle_handler {
 
             // "Forward" event to Joomla
             if ($forward_events) {
-                $data = array ();
+				$data = array ();
                 $data['course_id'] = $courseid;
-                $data['username'] = $user->username;
+                $data['username'] = $user->username; // edited by mojtaba for joomtel
+                $data['name1'] = $user->firstname . " " . $user->lastname; // edited by mojtaba for joomtel
                 $data['course_name'] = $course->fullname;
                 $data['roleid'] = $roleid;
                 $auth_joomdle->call_method ('moodleEvent', 'RoleAssigned',  $data);
